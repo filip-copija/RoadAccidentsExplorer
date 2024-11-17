@@ -1,20 +1,28 @@
 import sys
 from pathlib import Path
 
-# Add the root directory of the project to sys.path
 root_dir = Path(__file__).parent.parent
 sys.path.append(str(root_dir))
 
-# Import models and other modules
+import os
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from models.base import Base
 from models.region import Region
 from models.accident import Accident
 from scripts.process_data import process_csv
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+env_path = root_dir / ".env"
+load_dotenv(dotenv_path=env_path)
 
-DATABASE_URI = "postgresql://postgres:admin@localhost:5432/road_accidents"
+POSTGRES_USER = os.getenv("POSTGRES_USER")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
+POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5432")
+POSTGRES_DB = os.getenv("POSTGRES_DB")
+
+DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
 
 def load_data():
     engine = create_engine(DATABASE_URI)
@@ -42,7 +50,6 @@ def load_data():
             value=int(row["Value"]),
             unit=row["Unit"]
         )
-
         session.add(accident)
 
     session.commit()
