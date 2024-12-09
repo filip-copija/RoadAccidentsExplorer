@@ -5,6 +5,6 @@ from models.base import Base
 class Region(Base):
     __tablename__ = "regions"
 
-    region_id = Column(Integer, primary_key=True)  # Unique region ID
-    name = Column(String(255), nullable=False)     # Region name
-    type = Column(String(50), nullable=False)      # Region type (e.g., province, city)
+    region_id = Column(Integer, primary_key=True) 
+    name = Column(String(255), nullable=False)   
+    type = Column(String(50), nullable=False)      
