@@ -2,3 +2,9 @@ streamlit==1.39.0
 pandas==1.5.3
 sqlalchemy==2.0.29
 python-dotenv==1.0.1
+psycopg2==2.9.9
+plotly==5.18.0
+matplotlib==3.8.2
+seaborn==0.13.2
+numpy==1.26.3
+altair==5.4.1
